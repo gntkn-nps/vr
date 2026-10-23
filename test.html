@@ -2,17 +2,31 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Hello, World! • A-Frame</title>
-    <meta name="description" content="Hello, World! • A-Frame">
-    <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@gh-pages/examples/js/remix-dropdown.js"></script>
+    <title>AI試行メモ</title>
+    <meta name="AI試行メモ" content="AI試行メモ">
   </head>
   <body>
-    <a-scene background="color: #ECECEC">
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D" shadow></a-cylinder>
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4" shadow></a-plane>
-    </a-scene>
+<h3>20261022</h3>
+    <P>
+      RAGの精度が低い。具体的には、ソースとして与えているPDFに書いてあるそのままを質問しているのに
+      ソースとして与えられていないと回答してくる。
+      ソースのファイル名を明示すると回答できる。でもそれをやらなくていいがためのRAGだろう。
+      こいつはチャットの度にソースを全て検索することはしないらしい。NotebookLMはする。
+      「ナレッジベースの検索」と自称しているとおり、検索結果をDBにして回答を速めているのかもしれない。
+      そしてその検索結果DBに漏れがある、と。
+      検索精度はまずチャンク分割の良し悪し、その後の検索の良し悪しに左右される。
+      チャンク分割以前にソースにメタデータとかタグが振ってあると良いらしいが、
+      ある程度は構造化された文書じゃないと自動ではできなかろう。
+      そんな面倒なことが必要なのだろうか？　RAG（AI）ってその程度なの？というガッカリ感がある。
+      チャンク分割と検索はアプリの問題でありユーザーは手出しできない。
+      チャンク分割と検索が優秀なアプリを選ぶことしかできない。
+      ではその「優秀さ」はどのように判別すれば良いのだろうか。
+      世間的にはRagas（Retrieval Augmented Generation Assessment）というらしい。
+      LLM自身にジャッジ（LLM as a Judge）させることができるのでやってみた。
+      RAGにソースとして与えたFAQを同じRAGに添付し、RAGにQを問うてAを考えさせ、添付PDFと照合させた。
+      一件ずつ問うと３問間違いくらいだったが、全部自力でやらせると全問不正解だった。
+      knowledge baseに登録されていません。そのため、FAQ集に関するすべての質問に対して Retrieval段階で完全に失敗しており、正確な回答を生成できない状態です。
+      と言う。やはり検索段階での問題か。
+    </P>
   </body>
 </html>
